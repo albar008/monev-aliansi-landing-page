@@ -14,6 +14,37 @@
             background-image: radial-gradient(circle at 1px 1px, rgb(148 163 184 / 0.15) 1px, transparent 0);
             background-size: 32px 32px;
         }
+        .hero-grid-bg {
+            position: relative;
+            overflow: hidden;
+            --cursor-x: 0px;
+            --cursor-y: 0px;
+        }
+        .hero-grid-bg::before,
+        .hero-grid-bg::after {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: calc(100% + 200px);
+            height: calc(100% + 200px);
+            background-image: 
+                linear-gradient(to right, rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 130, 246, 0.08) 1px, transparent 1px);
+            background-size: 200px 200px;
+            will-change: transform;
+        }
+        .hero-grid-bg::before {
+            transform: translate(var(--cursor-x), var(--cursor-y));
+            transition: transform 0.1s ease-out;
+        }
+        .hero-grid-bg::after {
+            top: 0;
+            left: 0;
+            transform: translate(calc(var(--cursor-x) * 0.5), calc(var(--cursor-y) * 0.5));
+            transition: transform 0.15s ease-out;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body class="min-h-screen font-sans text-slate-900">
@@ -59,7 +90,7 @@
 
     <!-- Hero -->
 
-    <section class="relative pt-16 pb-32 overflow-hidden bg-slate-50 bg-grid">
+    <section class="relative pt-16 pb-32 overflow-hidden bg-slate-50 hero-grid-bg">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
           <!-- Left Content -->

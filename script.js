@@ -4,6 +4,39 @@ document.addEventListener('DOMContentLoaded', function() {
         lucide.createIcons();
     }
     
+    // Hero grid cursor-following animation
+    const heroSection = document.querySelector('.hero-grid-bg');
+    if (heroSection) {
+        let targetX = 0;
+        let targetY = 0;
+        let currentX = 0;
+        let currentY = 0;
+        
+        heroSection.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            targetX = (e.clientX - rect.left) / rect.width - 0.5;
+            targetY = (e.clientY - rect.top) / rect.height - 0.5;
+        });
+        
+        heroSection.addEventListener('mouseleave', () => {
+            targetX = 0;
+            targetY = 0;
+        });
+        
+        function animate() {
+            // Smooth interpolation
+            currentX += (targetX * 40 - currentX) * 0.08;
+            currentY += (targetY * 40 - currentY) * 0.08;
+            
+            heroSection.style.setProperty('--cursor-x', `${currentX}px`);
+            heroSection.style.setProperty('--cursor-y', `${currentY}px`);
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    }
+    
     // Smooth scroll with offset for sticky header
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
